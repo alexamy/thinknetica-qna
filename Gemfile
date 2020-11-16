@@ -35,6 +35,7 @@ group :development, :test do
   gem "factory_bot_rails", "~> 6.1"
 
   gem "rubocop", "~> 1.3"
+  gem "rubocop-rails", "~> 2.8"
   gem "reek", "~> 6.0"
   gem "brakeman", "~> 4.10"
 end
