@@ -1,5 +1,7 @@
 env:
   RUBY_VERSION: 2.7.2
+  DB_USER: postgres
+  DB_PASSWORD: postgres
 
 name: Rails tests
 on: [push, pull_request]
@@ -15,8 +17,8 @@ jobs:
         ports:
         - 5432:5432
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: ${{ env.DB_USER }}
+          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v2
@@ -29,9 +31,11 @@ jobs:
         run: sudo apt-get install libpq-dev
 
       - name: Create database
-        run: |
-          bundler exec rails db:create RAILS_ENV=test
-          bundler exec rails db:migrate RAILS_ENV=test
+        env:
+          POSTGRES_USER: ${{ env.DB_USER }}
+          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+          RAILS_ENV: test
+        run: bundler exec rails db:create db:migrate
 
       - name: Rubocop
         run: bundle exec rubocop
