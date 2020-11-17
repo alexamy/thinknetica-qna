@@ -16,6 +16,9 @@ jobs:
         image: postgres:latest
         ports:
         - 5432:5432
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v2
@@ -28,8 +31,6 @@ jobs:
         run: sudo apt-get install libpq-dev
 
       - name: Create database
-        env:
-          RAILS_ENV: test
         run: bundler exec rails db:create db:migrate
 
       - name: Rubocop
@@ -42,10 +43,6 @@ jobs:
         run: bundle exec brakeman
 
       - name: RSpec
-        env:
-          POSTGRES_USER: ${{ env.DB_USER }}
-          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
-          RAILS_ENV: test
         run: bundle exec rspec
 
       - name: Upload coverage results
