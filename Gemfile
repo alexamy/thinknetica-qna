@@ -38,6 +38,7 @@ group :development, :test do
   gem "rubocop-rails", "~> 2.8"
   gem "reek", "~> 6.0"
   gem "brakeman", "~> 4.10"
+  gem "bullet", "~> 6.1"
 end
 
 group :development do
