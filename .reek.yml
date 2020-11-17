@@ -4,3 +4,4 @@ detectors:
 
 exclude_paths:
   - db/
+  - node_modules/
