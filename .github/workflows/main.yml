@@ -8,7 +8,7 @@ name: Rails tests
 on: [push,pull_request]
 jobs:
   test:
-    name: test
+    name: Tests
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -26,10 +26,6 @@ jobs:
           bundler-cache: true
       - name: Install postgres client
         run: sudo apt-get install libpq-dev
-      - name: Install dependencies
-        run:
-          gem install bundler
-          bundle install
       - name: Create database
         run: |
           bundler exec rails db:create RAILS_ENV=test
