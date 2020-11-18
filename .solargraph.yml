@@ -18,6 +18,7 @@ require:
 domains: []
 reporters:
 - rubocop
+- reek
 - require_not_found
 require_paths: []
 plugins: []
