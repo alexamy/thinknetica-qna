@@ -43,14 +43,7 @@ jobs:
         run: bundle exec reek
 
       - name: Brakeman
-        run: bundle exec brakeman
+        run: bundle exec brakeman -q --no-pager
 
       - name: RSpec
         run: bundle exec rspec
-
-      - name: Upload coverage results
-        uses: actions/upload-artifact@master
-        if: always()
-        with:
-          name: coverage report
-          path: coverage
