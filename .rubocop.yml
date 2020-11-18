@@ -5,10 +5,6 @@ require:
 
 AllCops:
   NewCops: enable
-  Exclude:
-    - 'db/**/*'
-    - 'bin/**/*'
-    - 'node_modules/**/*'
 
 Style/Documentation:
   Enabled: false
