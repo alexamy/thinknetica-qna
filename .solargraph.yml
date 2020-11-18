@@ -1,0 +1,25 @@
+---
+include:
+- "**/*.rb"
+exclude:
+- test/**/*
+- vendor/**/*
+- ".bundle/**/*"
+require:
+- actioncable
+- actionmailer
+- actionpack
+- actionview
+- activejob
+- activemodel
+- activerecord
+- activestorage
+- activesupport
+domains: []
+reporters:
+- rubocop
+- reek
+- require_not_found
+require_paths: []
+plugins: []
+max_files: 5000

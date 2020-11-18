@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+echo -e "\n\e[45m Rubocop \e[0m"  && bundle exec rubocop && \
+echo -e "\n\e[45m Reek \e[0m"     && bundle exec reek    && \
+echo -e "\n\e[45m RSpec \e[0m"    && bundle exec rspec   && \
+echo -e "\n\e[45m Brakeman \e[0m" && bundle exec brakeman -q --no-pager
