@@ -39,8 +39,11 @@ group :development, :test do
   gem 'brakeman', '~> 4.10'
   gem 'bullet', '~> 6.1'
   gem 'reek', '~> 6.0'
+
   gem 'rubocop', '~> 1.3'
+  gem 'rubocop-performance', '~> 1.9'
   gem 'rubocop-rails', '~> 2.8'
+  gem 'rubocop-rspec', '~> 2.0'
 end
 
 group :development do
@@ -64,5 +67,3 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-
-gem 'rubocop-rspec', '~> 2.0'
