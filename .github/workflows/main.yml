@@ -40,10 +40,10 @@ jobs:
         run: bundle exec rubocop
 
       - name: Reek
-        run: bundle exec reek
+        run: bundle exec reek >&1
 
       - name: Brakeman
-        run: bundle exec brakeman
+        run: bundle exec brakeman -q --no-pager
 
       - name: RSpec
         run: bundle exec rspec
