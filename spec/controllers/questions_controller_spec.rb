@@ -98,7 +98,18 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with invalid attributes' do
+      it 'does not change question' do
+        patch :update, params: { id: question, question: attributes_for(:question, :invalid) }
+        question.reload
 
+        expect(question.title).to eq 'MyString'
+        expect(question.body).to eq 'MyText'
+      end
+
+      it 're-renders edit view' do
+        patch :update, params: { id: question, question: attributes_for(:question, :invalid) }
+        expect(response).to render_template :edit
+      end
     end
   end
 end
