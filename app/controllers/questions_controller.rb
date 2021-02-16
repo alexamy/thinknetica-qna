@@ -25,7 +25,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-
+    @question.update(question_params)
   end
 
   private
