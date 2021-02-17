@@ -5,3 +5,8 @@ detectors:
 exclude_paths:
   - db/
   - node_modules/
+
+directories:
+  "app/controllers": # using variable initialization in before_action
+    InstanceVariableAssumption:
+      enabled: false
