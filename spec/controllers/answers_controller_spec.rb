@@ -6,7 +6,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
 
   describe 'GET #index' do
-    before { get :index }
+    before { get :index, params: { question_id: question.id } }
 
     it 'assigns requested question to @question' do
       expect(assigns(:question)).to eq question
