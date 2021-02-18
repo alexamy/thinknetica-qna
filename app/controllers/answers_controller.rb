@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :find_question, only: %i[new create show]
+  before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i[show]
 
   def show; end
@@ -12,7 +12,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
 
     if @answer.save
-      redirect_to question_answer_path(@question, @answer)
+      redirect_to @answer
     else
       render :new
     end
