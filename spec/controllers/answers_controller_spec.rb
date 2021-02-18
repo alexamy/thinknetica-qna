@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
 
@@ -37,7 +40,7 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     context 'with valid attributes' do
       it 'saves a new answer to a database' do
-        expect { post :create, params: { question_id: question.id, answer: attributes_for(:answer) }}
+        expect { post :create, params: { question_id: question.id, answer: attributes_for(:answer) } }
           .to change(Answer, :count).by(1)
       end
 
@@ -49,7 +52,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not save an answer' do
-        expect { post :create, params: { question_id: question.id, answer: attributes_for(:answer, :invalid) }}
+        expect { post :create, params: { question_id: question.id, answer: attributes_for(:answer, :invalid) } }
           .not_to change(Answer, :count)
       end
 
@@ -60,3 +63,4 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
