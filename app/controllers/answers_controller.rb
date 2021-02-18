@@ -7,7 +7,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
-    @answer.save
+    render :new unless @answer.save
   end
 
   private
