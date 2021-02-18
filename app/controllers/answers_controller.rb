@@ -10,7 +10,12 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
-    render :new unless @answer.save
+
+    if @answer.save
+      redirect_to question_answer_path(@question, @answer)
+    else
+      render :new
+    end
   end
 
   private
