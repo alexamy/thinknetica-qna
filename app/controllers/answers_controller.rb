@@ -1,7 +1,9 @@
 class AnswersController < ApplicationController
   before_action :find_question, only: %i[new]
 
-  def new; end
+  def new
+    @answer = @question.answers.new
+  end
 
   private
 
