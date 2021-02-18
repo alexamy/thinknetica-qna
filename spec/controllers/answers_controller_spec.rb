@@ -3,6 +3,12 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
 
+  describe 'GET #show' do
+    it 'assigns requested question to @question'
+    it 'assigns requested answer to @answer'
+    it 'renders a show view'
+  end
+
   describe 'GET #new' do
     before { get :new, params: { question_id: question.id } }
 
