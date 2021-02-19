@@ -27,7 +27,6 @@ RSpec.describe AnswersController, type: :controller do
       expect(assigns(:question)).to eq question
     end
 
-    # TODO: how to test that its belongs to question?
     it 'assigns new answer to @answer' do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
@@ -41,7 +40,7 @@ RSpec.describe AnswersController, type: :controller do
     context 'with valid attributes' do
       it 'saves a new answer to a database' do
         expect { post :create, params: { question_id: question.id, answer: attributes_for(:answer) } }
-          .to change(Answer, :count).by(1)
+          .to change(question.answers, :count).by(1)
       end
 
       it 'redirects to show view' do
