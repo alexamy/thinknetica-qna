@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -77,5 +76,3 @@ Rails.application.configure do
   # Devise configuration
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
-
-# rubocop:enable Metrics/BlockLength

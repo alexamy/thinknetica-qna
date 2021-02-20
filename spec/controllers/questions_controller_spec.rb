@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 # TODO: split large spec
-# rubocop:disable Metrics/BlockLength
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
 
@@ -130,4 +129,3 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

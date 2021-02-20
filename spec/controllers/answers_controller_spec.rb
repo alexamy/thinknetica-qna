@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 
-# rubocop:disable Metrics/BlockLength
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
 
@@ -62,4 +61,3 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

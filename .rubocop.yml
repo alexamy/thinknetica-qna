@@ -7,11 +7,18 @@ AllCops:
   TargetRubyVersion: 2.7.2
   NewCops: enable
   Exclude:
-    - 'db/**/*'
-    - 'config/**/*'
-    - 'bin/**/*'
-    - 'node_modules/**/*'
+    - db/**/*
+    - config/**/*
+    - bin/**/*
+    - node_modules/**/*
     - !ruby/regexp /old_and_unused\.rb$/
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
 
 Style/Documentation:
   Enabled: false
