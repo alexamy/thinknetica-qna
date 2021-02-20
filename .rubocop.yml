@@ -11,3 +11,6 @@ Style/Documentation:
 
 RSpec/MultipleExpectations:
   Max: 2 # testing PATCH #update with invalid attributes
+
+RSpec/Capybara/FeatureMethods:
+  Enabled: false
