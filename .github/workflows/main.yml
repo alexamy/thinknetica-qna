@@ -37,7 +37,7 @@ jobs:
         run: bundler exec rails db:create db:migrate
 
       - name: Rubocop
-        run: bundle exec rubocop --config .rubocop.yml
+        run: bundle exec rubocop
 
       - name: Reek
         run: bundle exec reek
