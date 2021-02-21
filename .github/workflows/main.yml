@@ -37,9 +37,9 @@ jobs:
         run: bundler exec rails db:create db:migrate
 
       - name: Install dependencies
-        run:
-          - bundle
-          - yarn
+        run: |
+          bundle
+          yarn
 
       - name: Rubocop
         run: bundle exec rubocop
