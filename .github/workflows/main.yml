@@ -36,6 +36,11 @@ jobs:
           RAILS_ENV: test
         run: bundler exec rails db:create db:migrate
 
+      - name: Install dependencies
+        run:
+          - bundle
+          - yarn
+
       - name: Rubocop
         run: bundle exec rubocop
 
