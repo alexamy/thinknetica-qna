@@ -8,11 +8,11 @@ feature 'User can view question list', "
   I'd like to be able to see all questions
 " do
 
-  given(:questions) { create_list(:question, 5) }
+  given!(:questions) { create_list(:question, 5) }
 
   scenario 'User views a questions list' do
     visit questions_path
 
-    expect(page).to have_table('Questions', rows: questions.map(&:title).in_groups_of(1))
+    expect(page).to have_table('Questions', cols: [questions.map(&:title)])
   end
 end
