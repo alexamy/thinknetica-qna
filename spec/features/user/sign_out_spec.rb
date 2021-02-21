@@ -10,7 +10,7 @@ feature 'User can sign out', "
 
   given(:user) { create(:user) }
 
-  scenario 'Registered user try to sign out' do
+  scenario 'Registered user tries to sign out' do
     sign_in(user)
 
     visit root_path
@@ -19,7 +19,7 @@ feature 'User can sign out', "
     expect(page).to have_content 'Signed out successfully.'
   end
 
-  scenario 'Unregistered user try to sign out' do
+  scenario 'Unregistered user tries to sign out' do
     visit root_path
 
     expect(page).not_to have_button 'Sign out'

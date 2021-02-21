@@ -11,9 +11,9 @@ feature 'User can sign up', "
   given(:user) { create(:user) }
 
   describe 'Unauthenticated user' do
-    scenario 'try to sign up'
-    scenario 'try to sign up with errors'
+    scenario 'tries to sign up'
+    scenario 'tries to sign up with errors'
   end
 
-  scenario 'Authenticated user try to sign up'
+  scenario 'Authenticated user tries to sign up'
 end
