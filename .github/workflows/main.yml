@@ -37,7 +37,7 @@ jobs:
         run: bundler exec rails db:create db:migrate
 
       - name: Rubocop
-        run: bundle exec rubocop
+        run: bundle exec rubocop --enable-pending-cops
 
       - name: Reek
         run: bundle exec reek
