@@ -34,5 +34,11 @@ feature 'User can sign up', "
     end
   end
 
-  scenario 'Authenticated user tries to sign up'
+  scenario 'Authenticated user tries to sign up' do
+    sign_in(user)
+
+    visit new_user_registration_path
+
+    expect(page).to have_content 'You are already signed in.'
+  end
 end
