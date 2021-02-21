@@ -22,7 +22,16 @@ feature 'User can sign up', "
       expect(page).to have_content 'You have signed up successfully.'
     end
 
-    scenario 'tries to sign up with errors'
+    # didnt add test cases for incorrect email and short password
+    # because it's handled by devise gem internally
+    scenario 'tries to sign up with errors' do
+      visit new_user_registration_path
+
+      click_on 'Sign up'
+
+      expect(page).to have_content "Email can't be blank"
+      expect(page).to have_content "Password can't be blank"
+    end
   end
 
   scenario 'Authenticated user tries to sign up'
