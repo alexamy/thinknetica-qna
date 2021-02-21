@@ -13,6 +13,6 @@ feature 'User can view question list', "
   scenario 'User views a questions list' do
     visit questions_path
 
-    expect(page).to have_table('Questions', cols: [questions.map(&:title)])
+    expect(page).to have_table('Questions', with_cols: [questions.map(&:title)])
   end
 end
