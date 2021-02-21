@@ -23,6 +23,9 @@ Metrics/BlockLength:
 Style/Documentation:
   Enabled: false
 
+Rails/FilePath:
+  Enabled: false
+
 RSpec/Capybara/FeatureMethods:
   Enabled: false
 
@@ -30,4 +33,7 @@ RSpec/ExampleLength:
   Enabled: false
 
 RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ScatteredSetup:
   Enabled: false
