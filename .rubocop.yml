@@ -5,13 +5,12 @@ require:
 
 AllCops:
   NewCops: enable
-  # TargetRubyVersion: 2.7.2
-  # Exclude:
-  #   - db/**/*
-  #   - config/**/*
-  #   - bin/**/*
-  #   - node_modules/**/*
-  #   - !ruby/regexp /old_and_unused\.rb$/
+  Exclude:
+    - db/**/*
+    - config/**/*
+    - bin/**/*
+    - node_modules/**/*
+    - !ruby/regexp /old_and_unused\.rb$/
 
 Layout/EmptyLinesAroundBlockBody:
   Enabled: false
@@ -19,12 +18,10 @@ Layout/EmptyLinesAroundBlockBody:
 Layout/LineLength:
   Exclude:
     - spec/**/*
-    - config/**/*
 
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
-    - config/**/*
 
 Style/Documentation:
   Enabled: false
