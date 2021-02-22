@@ -3,7 +3,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
   before_action :find_question, only: %i[new create]
-  before_action :find_answer, only: %i[show]
+  before_action :find_answer, only: %i[show destroy]
 
   def show; end
 
@@ -18,6 +18,15 @@ class AnswersController < ApplicationController
       redirect_to @question
     else
       render 'questions/show'
+    end
+  end
+
+  def destroy
+    if @answer.own_by?(current_user)
+      @answer.destroy
+      redirect_to question_path(@answer.question), notice: 'Answer was successfully deleted.'
+    else
+      redirect_back fallback_location: root_path, notice: "Can't delete someone else's answer"
     end
   end
 
