@@ -5,4 +5,8 @@ class Question < ApplicationRecord
   belongs_to :author, class_name: 'User'
 
   validates :title, :body, presence: true
+
+  def own_by?(user)
+    user.id == author.id
+  end
 end

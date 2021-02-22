@@ -37,8 +37,12 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path, notice: 'Question was successfully deleted.'
+    if @question.own_by?(current_user)
+      @question.destroy
+      redirect_to questions_path, notice: 'Question was successfully deleted.'
+    else
+      redirect_back fallback_location: root_path, notice: "Can't delete someone else's question"
+    end
   end
 
   private
