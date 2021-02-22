@@ -8,7 +8,8 @@ feature 'User can view question list', "
   I'd like to be able to see all questions
 " do
 
-  given!(:questions) { create_list(:question, 5) }
+  given(:user) { create(:user) }
+  given!(:questions) { create_list(:question, 5, author: user) }
 
   scenario 'User views a questions list' do
     visit questions_path

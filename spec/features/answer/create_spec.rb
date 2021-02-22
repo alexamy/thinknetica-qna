@@ -9,7 +9,7 @@ feature 'User can add an answer', "
 " do
 
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given(:question) { create(:question, author: user) }
 
   describe 'Authenticated user' do
     background do

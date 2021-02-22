@@ -8,8 +8,9 @@ feature 'User can view answers for question', "
   I'd like to see an answers list
 " do
 
-  given(:question) { create(:question) }
-  given!(:answers) { create_list(:answer, 5, question: question) }
+  given(:user) { create(:user) }
+  given(:question) { create(:question, author: user) }
+  given!(:answers) { create_list(:answer, 5, question: question, author: user) }
 
   scenario 'User tries to view question answers' do
     visit question_path(question)
