@@ -7,7 +7,23 @@ feature 'User can delete question', "
   As an authenticated user
   I'd like to be able to delete my own question
 " do
-  scenario 'Authenticated user deletes his question'
-  scenario 'Authenticated user tries to delete others question'
+  given(:user) { create(:user) }
+  given(:question) { create(:question) }
+
+  describe 'Authenticated user' do
+    background do
+      sign_in(user)
+      visit question_path(question)
+    end
+
+    scenario 'deletes his question' do
+      click_on 'Delete'
+
+      expect(page).to have_content('Question was successfully deleted.')
+    end
+
+    scenario 'tries to delete others question'
+  end
+
   scenario 'Unauthenticated user tries to delete question'
 end
