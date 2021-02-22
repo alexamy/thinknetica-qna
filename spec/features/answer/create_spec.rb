@@ -11,12 +11,12 @@ feature 'User can add an answer', "
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  background do
-    sign_in(user)
-    visit question_path(question)
-  end
-
   describe 'Authenticated user' do
+    background do
+      sign_in(user)
+      visit question_path(question)
+    end
+
     scenario 'adds an answer' do
       fill_in 'Answer', with: 'Test answer body'
       click_on 'Add answer'
@@ -31,5 +31,9 @@ feature 'User can add an answer', "
     end
   end
 
-  scenario 'Unauthenticated user tries to add an answer'
+  scenario 'Unauthenticated user tries to add an answer' do
+    visit question_path(question)
+
+    expect(page).to have_no_button 'Add answer'
+  end
 end

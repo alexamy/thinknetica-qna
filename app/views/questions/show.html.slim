@@ -10,9 +10,10 @@ p = @question.body
       th Answer
     = render @question.answers
 
-= form_with model: [@question, @answer] do |f|
-  = f.label :body, 'Answer'
-  = f.text_area :body
+- if user_signed_in?
+  = form_with model: [@question, @answer] do |f|
+    = f.label :body, 'Answer'
+    = f.text_area :body
 
-  = f.submit 'Add answer'
-end
+    = f.submit 'Add answer'
+  end
