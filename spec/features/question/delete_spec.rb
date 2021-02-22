@@ -31,5 +31,10 @@ feature 'User can delete question', "
     end
   end
 
-  scenario 'Unauthenticated user tries to delete question'
+  scenario 'Unauthenticated user tries to delete question' do
+    visit question_path(question)
+    click_on 'Delete'
+
+    expect(page).to have_content('You need to sign in or sign up before continuing.')
+  end
 end
