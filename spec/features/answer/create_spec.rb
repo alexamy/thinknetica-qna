@@ -21,14 +21,13 @@ feature 'User can add an answer', "
       fill_in 'Answer', with: 'Test answer body'
       click_on 'Add answer'
 
-      expect(page).to have_content('Your answer was successfully created')
-      expect(page).to have_content('Test answer body')
+      expect(page).to have_content 'Test answer body'
     end
 
     scenario 'adds an answer with errors' do
       click_on 'Add answer'
 
-      expect(page).to have_content("Body can't be blank")
+      expect(page).to have_content "Body can't be blank"
     end
   end
 
