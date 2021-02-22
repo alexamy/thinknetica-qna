@@ -22,7 +22,7 @@ feature 'User can delete answer', "
     end
 
     scenario 'deletes his answer' do
-      within('td', text: answer.body) do
+      within('tr', text: answer.body) do
         click_on 'Delete'
       end
 
