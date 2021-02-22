@@ -33,7 +33,8 @@ feature 'User can add an answer', "
 
   scenario 'Unauthenticated user tries to add an answer' do
     visit question_path(question)
+    click_on 'Add answer'
 
-    expect(page).to have_no_button 'Add answer'
+    expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 end
