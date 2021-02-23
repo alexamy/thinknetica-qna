@@ -6,6 +6,13 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
+  def destroy_as(user)
+    is_own = own_by?(user)
+
+    destroy if is_own
+    is_own
+  end
+
   def own_by?(user)
     user.id == author.id
   end
