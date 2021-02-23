@@ -8,4 +8,11 @@ class User < ApplicationRecord
 
   has_many :questions, inverse_of: 'author', foreign_key: 'author_id', dependent: :destroy
   has_many :answers, inverse_of: 'author', foreign_key: 'author_id', dependent: :destroy
+
+  def owns?(resource)
+    author_id = resource.try(:author_id)
+    return unless author_id
+
+    id == author_id
+  end
 end
