@@ -20,14 +20,14 @@ feature 'User can delete question', "
       visit question_path(question)
       click_on 'Delete'
 
-      expect(page).to have_content('Question was successfully deleted.')
+      expect(page).to have_content 'Question was successfully deleted.'
     end
 
     scenario 'tries to delete others question' do
       visit question_path(other_question)
       click_on 'Delete'
 
-      expect(page).to have_content("Can't delete someone else's question")
+      expect(page).to have_content "Can't delete someone else's question"
     end
   end
 
@@ -35,6 +35,6 @@ feature 'User can delete question', "
     visit question_path(question)
     click_on 'Delete'
 
-    expect(page).to have_content('You need to sign in or sign up before continuing.')
+    expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 end

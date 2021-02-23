@@ -24,13 +24,13 @@ feature 'User can delete answer', "
     scenario 'deletes his answer' do
       within('tr', text: answer.body) { click_on 'Delete' }
 
-      expect(page).to have_content('Answer was successfully deleted.')
+      expect(page).to have_content 'Answer was successfully deleted.'
     end
 
     scenario 'tries to delete others answer' do
       within('tr', text: other_answer.body) { click_on 'Delete' }
 
-      expect(page).to have_content("Can't delete someone else's answer")
+      expect(page).to have_content "Can't delete someone else's answer"
     end
   end
 
@@ -39,6 +39,6 @@ feature 'User can delete answer', "
 
     within('tr', text: answer.body) { click_on 'Delete' }
 
-    expect(page).to have_content('You need to sign in or sign up before continuing.')
+    expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 end
