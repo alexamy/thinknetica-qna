@@ -11,7 +11,7 @@ p = @question.body
     tr
       th Answer
       th Actions
-    = render @question.answers
+    = render @question.answers.filter(&:persisted?)
 
 = form_with model: [@question, @answer] do |f|
   = f.label :body, 'Answer'
