@@ -22,7 +22,8 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if @answer.destroy_as(current_user)
+    if current_user.owns?(@answer)
+      @answer.destroy
       redirect_to question_path(@answer.question), notice: 'Answer was successfully deleted.'
     else
       redirect_back fallback_location: root_path, notice: "Can't delete someone else's answer"
