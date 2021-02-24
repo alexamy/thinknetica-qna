@@ -13,17 +13,26 @@ feature 'User can delete question', "
   given(:question) { create(:question, author: user) }
   given(:other_question) { create(:question, author: other_user) }
 
-  scenario 'Authenticated user deletes his question' do
-    sign_in(user)
-    visit question_path(question)
-    click_on 'Delete'
+  describe 'Authenticated user' do
+    background { sign_in(user) }
 
-    expect(page).to have_content 'Question was successfully deleted.'
-    expect(page).to have_no_content question.title
+    scenario 'deletes his question' do
+      visit question_path(question)
+      click_on 'Delete'
+
+      expect(page).to have_content 'Question was successfully deleted.'
+      expect(page).to have_no_content question.title
+    end
+
+    scenario 'tries to delete others question' do
+      visit question_path(other_question)
+
+      expect(page).to have_no_button 'Delete'
+    end
   end
 
-  scenario 'User tries to delete others question' do
-    visit question_path(other_question)
+  scenario 'Unauthenticated user tries to delete others question' do
+    visit question_path(question)
 
     expect(page).to have_no_button 'Delete'
   end

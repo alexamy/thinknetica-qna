@@ -35,7 +35,7 @@ feature 'User can delete answer', "
     end
   end
 
-  scenario 'User tries to delete answer' do
+  scenario 'Unauthenticated tries to delete answer' do
     visit question_path(question)
 
     within('tr', text: other_answer.body) do

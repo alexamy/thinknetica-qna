@@ -28,7 +28,7 @@ RSpec.describe User, type: :model do
       expect(user.owns?(other_question)).to be false
     end
 
-    it 'is nil when asked for object without author' do
+    it 'is nil when asked for object without author field' do
       expect(user.owns?({})).to be nil
     end
   end
