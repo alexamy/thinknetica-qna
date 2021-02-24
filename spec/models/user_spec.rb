@@ -13,7 +13,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_presence_of :password }
   end
 
-  describe 'owner_of?' do
+  describe 'author_of?' do
     let(:user) { create(:user) }
     let(:other_user) { create(:user) }
 
@@ -21,11 +21,11 @@ RSpec.describe User, type: :model do
     let(:other_question) { create(:question, author: other_user) }
 
     it 'is true when asked for owned object' do
-      expect(user).to be_owner_of(question)
+      expect(user).to be_author_of(question)
     end
 
     it "is false when asked for someone else's object" do
-      expect(user).not_to be_owner_of(other_question)
+      expect(user).not_to be_author_of(other_question)
     end
   end
 end

@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :questions, inverse_of: 'author', foreign_key: 'author_id', dependent: :destroy
   has_many :answers, inverse_of: 'author', foreign_key: 'author_id', dependent: :destroy
 
-  def owner_of?(resource)
+  def author_of?(resource)
     id == resource&.author_id
   end
 end

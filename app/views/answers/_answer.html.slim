@@ -2,5 +2,5 @@
   tr
     td = answer.body
     td
-      - if @user&.owner_of?(answer)
+      - if @user&.author_of?(answer)
         = button_to 'Delete', answer_path(answer), method: :delete
