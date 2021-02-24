@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 # TODO: split large spec
-# rubocop:disable Metrics/BlockLength
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
+  let(:user) { create(:user) }
+  let(:question) { create(:question, author: user) }
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 3) }
+    let(:questions) { create_list(:question, 3, author: user) }
 
     before { get :index }
 
@@ -22,10 +22,20 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
+    before { login(user) }
+
     before { get :show, params: { id: question } }
 
     it 'assigns requested question to @question' do
       expect(assigns(:question)).to eq question
+    end
+
+    it 'assigns new answer to @answer' do
+      expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
+    it 'assigns user to @user' do
+      expect(assigns(:user)).to be_an_instance_of(User)
     end
 
     it 'renders show view' do
@@ -34,6 +44,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
+    before { login(user) }
+
     before { get :new }
 
     it 'assigns new question to @question' do
@@ -46,6 +58,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
+    before { login(user) }
+
     before { get :edit, params: { id: question } }
 
     it 'assigns requested question to @question' do
@@ -58,6 +72,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    before { login(user) }
+
     context 'with valid attributes' do
       it 'save a new question in the database' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
@@ -83,6 +99,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update with valid attributes' do
+    before { login(user) }
+
     it 'assigns requested question to @question' do
       patch :update, params: { id: question, question: attributes_for(:question) }
       expect(assigns(:question)).to eq question
@@ -103,6 +121,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update with invalid attributes' do
+    before { login(user) }
+
     before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) } }
 
     it 'does not change question' do
@@ -118,10 +138,19 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let!(:question) { create(:question) }
+    let(:other_user) { create(:user) }
+
+    let!(:question) { create(:question, author: user) }
+    let!(:other_question) { create(:question, author: other_user) }
+
+    before { login(user) }
 
     it 'deletes the question' do
       expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+    end
+
+    it "can't delete other's question" do
+      expect { delete :destroy, params: { id: other_question } }.not_to change(Question, :count)
     end
 
     it 'redirects to index' do
@@ -130,4 +159,3 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

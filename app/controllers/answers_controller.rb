@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
+  before_action :authenticate_user!, except: %i[show]
   before_action :find_question, only: %i[new create]
-  before_action :find_answer, only: %i[show]
+  before_action :find_answer, only: %i[show destroy]
 
   def show; end
 
@@ -14,9 +15,18 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
 
     if @answer.save
-      redirect_to @answer
+      redirect_to @question
     else
-      render :new
+      render 'questions/show'
+    end
+  end
+
+  def destroy
+    if current_user.author_of?(@answer)
+      @answer.destroy
+      redirect_to question_path(@answer.question), notice: 'Answer was successfully deleted.'
+    else
+      redirect_back fallback_location: root_path, notice: "Can't delete someone else's answer"
     end
   end
 
@@ -31,6 +41,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body).merge(author: current_user)
   end
 end

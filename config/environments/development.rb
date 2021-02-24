@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -73,6 +72,7 @@ Rails.application.configure do
     Bullet.stacktrace_includes = %w[your_gem your_middleware]
     Bullet.stacktrace_excludes = ['their_gem', 'their_middleware', ['my_file.rb', 'my_method'], ['my_file.rb', 16..20]]
   end
-end
 
-# rubocop:enable Metrics/BlockLength
+  # Devise configuration
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+end
