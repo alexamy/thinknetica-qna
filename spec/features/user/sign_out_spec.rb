@@ -22,6 +22,6 @@ feature 'User can sign out', "
   scenario 'Unregistered user tries to sign out' do
     visit root_path
 
-    expect(page).not_to have_button 'Sign out'
+    expect(page).to have_no_button 'Sign out'
   end
 end

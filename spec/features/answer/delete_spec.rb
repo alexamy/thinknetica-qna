@@ -25,7 +25,7 @@ feature 'User can delete answer', "
       within('tr', text: answer.body) { click_on 'Delete' }
 
       expect(page).to have_content 'Answer was successfully deleted.'
-      expect(page).not_to have_content answer.body
+      expect(page).to have_no_content answer.body
     end
 
     scenario 'tries to delete others answer' do
