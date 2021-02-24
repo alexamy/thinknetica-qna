@@ -22,6 +22,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
+    before { login(user) }
+
     before { get :show, params: { id: question } }
 
     it 'assigns requested question to @question' do
@@ -30,6 +32,10 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'assigns new answer to @answer' do
       expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
+    it 'assigns user to @user' do
+      expect(assigns(:user)).to be_an_instance_of(User)
     end
 
     it 'renders show view' do

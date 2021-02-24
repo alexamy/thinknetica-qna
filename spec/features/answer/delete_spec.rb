@@ -29,17 +29,17 @@ feature 'User can delete answer', "
     end
 
     scenario 'tries to delete others answer' do
-      within('tr', text: other_answer.body) { click_on 'Delete' }
-
-      expect(page).to have_content "Can't delete someone else's answer"
+      within('tr', text: other_answer.body) do
+        expect(page).to have_no_button 'Delete'
+      end
     end
   end
 
-  scenario 'Unauthenticated user tries to delete answer' do
+  scenario 'User tries to delete answer' do
     visit question_path(question)
 
-    within('tr', text: answer.body) { click_on 'Delete' }
-
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    within('tr', text: other_answer.body) do
+      expect(page).to have_no_button 'Delete'
+    end
   end
 end
