@@ -7,8 +7,8 @@ FactoryBot.define do
 
   factory :answer do
     body
-    question { nil }
-    author { nil }
+    question
+    author
 
     trait :invalid do
       body { nil }
