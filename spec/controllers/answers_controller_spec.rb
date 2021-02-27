@@ -42,14 +42,19 @@ RSpec.describe AnswersController, type: :controller do
     before { login(user) }
 
     context 'with valid attributes' do
+      it 'assigns user to @user' do
+        post :create, params: { question_id: question.id, answer: attributes_for(:answer), format: :js }
+        expect(assigns(:user)).to be_an_instance_of(User)
+      end
+
       it 'saves a new answer to a database' do
-        expect { post :create, params: { question_id: question.id, answer: attributes_for(:answer) } }
+        expect { post :create, params: { question_id: question.id, answer: attributes_for(:answer), format: :js } }
           .to change(question.answers, :count).by(1)
       end
 
-      it 'redirects to question show view' do
-        post :create, params: { question_id: question.id, answer: attributes_for(:answer) }
-        expect(response).to redirect_to(assigns(:question))
+      it 'render create view' do
+        post :create, params: { question_id: question.id, answer: attributes_for(:answer), format: :js }
+        expect(response).to render_template :create
       end
     end
 

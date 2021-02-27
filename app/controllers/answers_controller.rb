@@ -12,9 +12,8 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
-
-    redirect_to @question if @answer.save
+    @answer = @question.answers.create(answer_params)
+    @user = User.find_by(id: current_user&.id)
   end
 
   def destroy

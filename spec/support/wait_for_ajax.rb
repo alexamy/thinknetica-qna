@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# :reek:DuplicateMethodCall
 # rubocop:disable all
 def wait_for_ajax
   max_time = Capybara::Helpers.monotonic_time + Capybara.default_max_wait_time
