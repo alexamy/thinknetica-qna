@@ -1,5 +1,3 @@
-= render 'shared/errors', resource: @answer
-
 h1 = @question.title
 p = @question.body
 
@@ -12,6 +10,9 @@ table
     th Answer
     th Actions
   = render @question.answers
+
+.answer-errors
+  = render 'shared/errors', resource: @answer
 
 = form_with model: [@question, @answer] do |f|
   = f.label :body, 'Answer'

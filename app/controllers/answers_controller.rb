@@ -14,11 +14,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
 
-    if @answer.save
-      redirect_to @question
-    else
-      render 'questions/show'
-    end
+    redirect_to @question if @answer.save
   end
 
   def destroy
