@@ -15,6 +15,6 @@ feature 'User can view answers for question', "
   scenario 'User tries to view question answers' do
     visit question_path(question)
 
-    expect(page).to have_table 'Answers', with_cols: [answers.map(&:body)]
+    expect(page.all('.answer').map(&:text)).to contain_exactly(*answers.map(&:body))
   end
 end

@@ -1,6 +1,5 @@
 - if answer.persisted?
-  tr
-    td = answer.body
-    td
-      - if @user&.author_of?(answer)
-        = button_to 'Delete', answer_path(answer), method: :delete
+.answer id="answer_#{answer.id}"
+  p = answer.body
+  - if @user&.author_of?(answer)
+    p = button_to 'Delete', answer_path(answer), method: :delete
