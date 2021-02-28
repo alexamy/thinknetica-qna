@@ -22,7 +22,7 @@ feature 'User can delete answer', "
     end
 
     scenario 'deletes his answer' do
-      within "#answer_#{answer.id}" do
+      within "#answer-#{answer.id}" do
         click_on 'Delete'
       end
 
@@ -31,7 +31,7 @@ feature 'User can delete answer', "
     end
 
     scenario 'tries to delete others answer' do
-      within "#answer_#{other_answer.id}" do
+      within "#answer-#{other_answer.id}" do
         expect(page).to have_no_button 'Delete'
       end
     end
@@ -40,7 +40,7 @@ feature 'User can delete answer', "
   scenario 'Unauthenticated tries to delete answer' do
     visit question_path(question)
 
-    within "#answer_#{other_answer.id}" do
+    within "#answer-#{other_answer.id}" do
       expect(page).to have_no_button 'Delete'
     end
   end
