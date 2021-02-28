@@ -20,13 +20,13 @@ feature 'User can edit answer', "
   describe 'Authenticated user' do
     background { sign_in(user) }
 
-    scenario 'edit his answer' do
+    scenario 'edit his answer', js: true do
       visit question_path(question)
 
       click_on 'Edit'
 
       within '.answers' do
-        fill_in 'Body', with: 'edited answer'
+        fill_in 'Your answer', with: 'edited answer'
         click_on 'Save'
 
         expect(page).to have_no_content answer.body

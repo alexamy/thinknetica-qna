@@ -49,8 +49,8 @@
       "group": "test",
       "command": "rspec --format f",
       "presentation": {
-        "reveal": "never",
-        "revealProblems": "always",
+        "reveal": "always",
+        "revealProblems": "onProblem",
         "clear": true
       },
       "problemMatcher": [{

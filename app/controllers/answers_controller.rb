@@ -2,8 +2,9 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
+  before_action :find_user, only: %i[create update]
   before_action :find_question, only: %i[new create]
-  before_action :find_answer, only: %i[show destroy]
+  before_action :find_answer, only: %i[show destroy update]
 
   def show; end
 
@@ -13,7 +14,10 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.create(answer_params)
-    @user = User.find_by(id: current_user&.id)
+  end
+
+  def update
+    @answer.update(answer_params)
   end
 
   def destroy
@@ -26,6 +30,10 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def find_user
+    @user = User.find_by(id: current_user&.id)
+  end
 
   def find_question
     @question = Question.find(params[:question_id])
