@@ -1,0 +1,68 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run test line",
+      "type": "shell",
+      "group": "test",
+      "command": "rspec ${file}:${lineNumber} --format p",
+      "problemMatcher": [],
+      "presentation": {
+        "clear": true
+      }
+    },
+    {
+      "label": "Run test file",
+      "type": "shell",
+      "group": "test",
+      "command": "rspec ${file} --format p",
+      "problemMatcher": [],
+      "presentation": {
+        "clear": true
+      }
+    },
+    {
+      "label": "Run test folder",
+      "type": "shell",
+      "group": "test",
+      "command": "rspec ${fileDirname} --format p",
+      "problemMatcher": [],
+      "presentation": {
+        "clear": true
+      }
+    },
+    {
+      "label": "Run all tests",
+      "type": "shell",
+      "group": "test",
+      "command": "rspec --format p",
+      "problemMatcher": [],
+      "presentation": {
+        "clear": true
+      }
+    },
+    {
+      "label": "Run all tests with report",
+      "type": "shell",
+      "group": "test",
+      "command": "rspec --format f",
+      "presentation": {
+        "reveal": "never",
+        "revealProblems": "always",
+        "clear": true
+      },
+      "problemMatcher": [{
+        "owner": "ruby",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "pattern": {
+          "regexp": "^(.+):(\\d+):(.+)$",
+          "file": 1,
+          "line": 2,
+          "message": 3
+        }
+      }]
+    },
+  ]
+}
