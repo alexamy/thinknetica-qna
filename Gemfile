@@ -28,7 +28,7 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 gem 'devise'
-gem 'rails-controller-testing'
+gem 'pry', '~> 0.13.1'
 gem 'slim-rails', '~> 3.2'
 
 # Reduces boot times through caching; required in config/boot.rb
@@ -36,7 +36,6 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'pry', '~> 0.13.1'
 
   gem 'factory_bot_rails', '~> 6.1'
   gem 'rspec-rails', '~> 4.0'
@@ -63,11 +62,12 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
-  gem 'launchy'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 
+  gem 'launchy', '~> 2.5'
+  gem 'rails-controller-testing', '~> 1.0'
   gem 'shoulda-matchers', '~> 4.4'
 end
 
