@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+function addEditLinks() {
   $('.answers').on('click', '.edit-answer-link', function(e) {
     e.preventDefault();
     $(this).hide();
@@ -6,4 +6,8 @@ $(document).on('turbolinks:load', function() {
     const answerId = $(this).data('answerId');
     $(`form#edit-answer-${answerId}`).show();
   });
+}
+
+$(document).on('turbolinks:load', function() {
+  addEditLinks();
 });
