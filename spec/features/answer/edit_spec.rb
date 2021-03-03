@@ -11,7 +11,7 @@ feature 'User can edit answer', "
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question, author: user) }
 
-  scenario 'Unauthenticated user can not edit the answer' do
+  scenario 'Unauthenticated user can not edit the answer', js: true do
     visit question_path(question)
 
     expect(page).to have_no_link 'Edit'
