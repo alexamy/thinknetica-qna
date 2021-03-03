@@ -3,12 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:user) { create(:user) }
-  let(:question) { create(:question, author: user) }
+  let!(:user) { create(:user) }
+  let!(:question) { create(:question, author: user) }
+  let!(:answer) { create(:answer, question: question, author: user) }
+
+  let!(:other_user) { create(:user) }
+  let!(:other_answer) { create(:answer, question: question, author: other_user) }
 
   describe 'GET #show' do
-    let(:answer) { create(:answer, question: question, author: user) }
-
     before { get :show, params: { id: answer } }
 
     it 'assigns requested answer to @answer' do
@@ -72,13 +74,11 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let!(:answer) { create(:answer, question: question, author: user) }
-
     before { login(user) }
 
     context 'with valid attributes' do
       it 'assigns user to @user' do
-        post :create, params: { question_id: question.id, answer: attributes_for(:answer), format: :js }
+        patch :update, params: { id: answer.id, answer: attributes_for(:answer), format: :js }
         expect(assigns(:user)).to be_an_instance_of(User)
       end
 
@@ -109,11 +109,6 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let(:other_user) { create(:user) }
-
-    let!(:answer) { create(:answer, question: question, author: user) }
-    let!(:other_answer) { create(:answer, question: question, author: other_user) }
-
     before { login(user) }
 
     it 'deletes the question' do
