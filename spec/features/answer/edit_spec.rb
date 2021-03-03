@@ -9,7 +9,7 @@ feature 'User can edit answer', "
 " do
   given!(:user) { create(:user) }
   given!(:question) { create(:question) }
-  given!(:answer) { create(:answer, question: question) }
+  given!(:answer) { create(:answer, question: question, author: user) }
 
   scenario 'Unauthenticated user can not edit the answer' do
     visit question_path(question)
@@ -18,6 +18,9 @@ feature 'User can edit answer', "
   end
 
   describe 'Authenticated user' do
+    given!(:other_user) { create(:user) }
+    given!(:other_answer) { create(:answer, question: question, author: other_user) }
+
     background { sign_in(user) }
 
     scenario 'edit his answer', js: true do
@@ -35,7 +38,25 @@ feature 'User can edit answer', "
       end
     end
 
-    scenario 'edit his answer with errors'
-    scenario "tries to edit other user's answer"
+    scenario 'edit his answer with errors', js: true do
+      visit question_path(question)
+
+      click_on 'Edit'
+
+      within '.answers' do
+        fill_in 'Your answer', with: ''
+        click_on 'Save'
+      end
+
+      expect(page).to have_content "Body can't be blank"
+    end
+
+    scenario "tries to edit other user's answer", js: true do
+      visit question_path(question)
+
+      within "#answer-#{other_answer.id}" do
+        expect(page).to have_no_link 'Edit'
+      end
+    end
   end
 end
