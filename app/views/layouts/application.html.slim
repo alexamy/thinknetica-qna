@@ -10,6 +10,5 @@ html
 
   body
     = render 'shared/navigation'
-    p.notice = notice
-    p.alert = alert
+    = render 'shared/alerts'
     = yield
