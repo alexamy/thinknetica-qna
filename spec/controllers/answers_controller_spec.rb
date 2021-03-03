@@ -118,11 +118,11 @@ RSpec.describe AnswersController, type: :controller do
   describe 'DELETE #destroy' do
     before { login(user) }
 
-    it 'deletes the question' do
+    it 'deletes the answer' do
       expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
     end
 
-    it "can't delete other's question" do
+    it "can't delete other's answer" do
       expect { delete :destroy, params: { id: other_answer } }.not_to change(Answer, :count)
     end
 
