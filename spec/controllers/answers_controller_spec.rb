@@ -76,6 +76,13 @@ RSpec.describe AnswersController, type: :controller do
   describe 'PATCH #update' do
     before { login(user) }
 
+    it "can't update other user answer" do
+      expect do
+        patch :update, params: { id: other_answer.id, answer: { body: 'new body' }, format: :js }
+        other_answer.reload
+      end.not_to change(other_answer, :body)
+    end
+
     context 'with valid attributes' do
       it 'assigns user to @user' do
         patch :update, params: { id: answer.id, answer: attributes_for(:answer), format: :js }
