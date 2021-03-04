@@ -10,7 +10,7 @@ feature 'User can edit question', "
   given!(:user) { create(:user) }
   given!(:other_user) { create(:user) }
 
-  given!(:question) { create(:question) }
+  given!(:question) { create(:question, author: user) }
   given!(:other_question) { create(:question, author: other_user) }
 
   scenario 'Unauthenticated user can not edit the question', js: true do
@@ -34,7 +34,7 @@ feature 'User can edit question', "
 
         expect(page).to have_no_content question.body
         expect(page).to have_content 'edited question'
-        expect(page).to have_no_selector 'textarea'
+        expect(page).to have_no_selector 'textarea#question_body'
       end
     end
 

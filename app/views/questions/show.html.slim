@@ -1,6 +1,9 @@
+.question-errors
+  = render 'shared/errors', resource: @question
+
 .question
-  h1 = @question.title
-  p = @question.body
+  h1.question-title = @question.title
+  p.question-body = @question.body
 
   - if @user&.author_of?(@question)
     p = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
