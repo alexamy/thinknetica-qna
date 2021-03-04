@@ -5,7 +5,10 @@ require 'rails_helper'
 # TODO: split large spec
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
+  let(:other_user) { create(:user) }
+
   let(:question) { create(:question, author: user) }
+  let(:other_question) { create(:question, author: other_user) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3, author: user) }
@@ -101,14 +104,26 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'PATCH #update' do
     before { login(user) }
 
+    it "can't update other user question" do
+      expect do
+        patch :update, params: { id: other_question.id, question: { body: 'new body' }, format: :js }
+        other_question.reload
+      end.not_to change(other_question, :body)
+    end
+
+    it 'renders update view' do
+      patch :update, params: { id: question, question: { body: 'new body' } }, format: :js
+      expect(response).to render_template :update
+    end
+
     context 'with valid attributes' do
       it 'assigns requested question to @question' do
-        patch :update, params: { id: question, question: attributes_for(:question) }
+        patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
         expect(assigns(:question)).to eq question
       end
 
       it 'changes question attributes' do
-        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }
+        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }, format: :js
         question.reload
 
         expect(question.title).to eq 'new title'
@@ -118,7 +133,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not change question' do
-        patch :update, params: { id: question, question: attributes_for(:question, :invalid) }
+        patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js
         question.reload
 
         expect(question.title).to eq 'MyString'
