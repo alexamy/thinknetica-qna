@@ -14,7 +14,9 @@ feature 'User can edit answer', "
   scenario 'Unauthenticated user can not edit the answer', js: true do
     visit question_path(question)
 
-    expect(page).to have_no_link 'Edit'
+    within '.answers' do
+      expect(page).to have_no_link 'Edit'
+    end
   end
 
   describe 'Authenticated user' do
@@ -23,12 +25,11 @@ feature 'User can edit answer', "
 
     background { sign_in(user) }
 
-    scenario 'edit his answer', js: true do
+    scenario 'edits his answer', js: true do
       visit question_path(question)
 
-      click_on 'Edit'
-
       within '.answers' do
+        click_on 'Edit'
         fill_in 'Your answer', with: 'edited answer'
         click_on 'Save'
 
@@ -38,12 +39,11 @@ feature 'User can edit answer', "
       end
     end
 
-    scenario 'edit his answer with errors', js: true do
+    scenario 'edits his answer with errors', js: true do
       visit question_path(question)
 
-      click_on 'Edit'
-
       within '.answers' do
+        click_on 'Edit'
         fill_in 'Your answer', with: ''
         click_on 'Save'
       end
