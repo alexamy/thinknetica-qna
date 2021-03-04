@@ -8,6 +8,14 @@ function addEditLinks() {
   });
 }
 
+function addDeleteLinks() {
+  $('.answers').on('click', '.delete-answer-link', function(e) {
+     const answerId = $(this).data('answerId');
+     $(`#answer-${answerId}`).remove();
+  });
+}
+
 $(document).on('turbolinks:load', function() {
   addEditLinks();
+  addDeleteLinks();
 });

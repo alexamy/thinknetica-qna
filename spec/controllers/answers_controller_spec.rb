@@ -119,16 +119,16 @@ RSpec.describe AnswersController, type: :controller do
     before { login(user) }
 
     it 'deletes the answer' do
-      expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
+      expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(-1)
     end
 
     it "can't delete other's answer" do
-      expect { delete :destroy, params: { id: other_answer } }.not_to change(Answer, :count)
+      expect { delete :destroy, params: { id: other_answer }, format: :js }.not_to change(Answer, :count)
     end
 
-    it 'redirects to question show' do
-      delete :destroy, params: { id: answer }
-      expect(response).to redirect_to question_path(question)
+    it 'render delete template' do
+      delete :destroy, params: { id: answer }, format: :js
+      expect(response).to render_template :destroy
     end
   end
 end

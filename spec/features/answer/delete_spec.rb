@@ -21,12 +21,11 @@ feature 'User can delete answer', "
       visit question_path(question)
     end
 
-    scenario 'deletes his answer' do
+    scenario 'deletes his answer', js: true do
       within "#answer-#{answer.id}" do
         click_on 'Delete'
       end
 
-      expect(page).to have_content 'Answer was successfully deleted.'
       expect(page).to have_no_content answer.body
     end
 
