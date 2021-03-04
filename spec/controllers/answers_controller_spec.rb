@@ -126,9 +126,9 @@ RSpec.describe AnswersController, type: :controller do
       expect { delete :destroy, params: { id: other_answer }, format: :js }.not_to change(Answer, :count)
     end
 
-    it 'render delete template' do
+    it 'returns 200 status' do
       delete :destroy, params: { id: answer }, format: :js
-      expect(response).to render_template :destroy
+      expect(response).to have_http_status :ok
     end
   end
 end

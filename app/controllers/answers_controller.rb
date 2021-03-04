@@ -22,6 +22,7 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy if current_user.author_of?(@answer)
+    head :ok
   end
 
   private
