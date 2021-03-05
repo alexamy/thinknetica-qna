@@ -6,6 +6,7 @@ RSpec.describe Question, type: :model do
   describe 'associations' do
     it { is_expected.to have_many(:answers) }
     it { is_expected.to belong_to(:author) }
+    it { is_expected.to belong_to(:best_answer) }
   end
 
   describe 'validations' do
