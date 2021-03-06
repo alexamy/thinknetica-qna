@@ -1,6 +1,12 @@
 - if answer.persisted?
-  .answer id="answer-#{answer.id}"
+  .answer id="answer-#{answer.id}" class="#{'best-answer' if answer.best?}"
     p.answer-body = answer.body
+
+    - if @user&.author_of?(answer.question)
+      p = link_to 'Choose as best',
+                  set_as_best_answer_path(answer),
+                  method: :post, remote: true,
+                  class: "choose-best-answer-link #{'hidden' if answer.best?}"
 
     - if @user&.author_of?(answer)
       p = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
