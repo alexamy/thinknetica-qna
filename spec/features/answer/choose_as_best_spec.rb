@@ -11,26 +11,42 @@ feature 'User can choose the best answer', "
   given(:question) { create(:question, author: user) }
   given!(:answers) { create_list(:answer, 4, question: question, author: user) }
 
-  background { sign_in(user) }
+  given(:other_user) { create(:user) }
+  given(:other_question) { create(:question, author: other_user) }
+  given!(:other_answers) { create_list(:answer, 4, question: other_question, author: other_user) }
 
-  scenario 'Authenticated user set answer as the best', js: true do
+  scenario "Unauthenticated user can't choose answer as the best" do
     visit question_path(question)
+    expect(page).to have_no_link 'Choose as best'
+  end
 
-    answers.each do |best_answer|
-      best_answer_selector = "#answer-#{best_answer.id}"
-      answers_reordered = [best_answer] + answers.reject { |a| a == best_answer }
+  describe 'Authenticated user' do
+    background { sign_in(user) }
 
-      within(best_answer_selector) { click_on 'Choose as best' }
+    scenario "can't choose answer as the best for other user's question" do
+      visit question_path(other_question)
+      expect(page).to have_no_link 'Choose as best'
+    end
 
-      answers_bodies = page.all('.answers .answer-body').map(&:text)
+    scenario 'choose answer as the best for his question', js: true do
+      visit question_path(question)
 
-      within best_answer_selector do
-        expect(page).to have_no_content 'Choose as best'
+      answers.each do |best_answer|
+        best_answer_selector = "#answer-#{best_answer.id}"
+        answers_reordered = [best_answer] + answers.reject { |a| a == best_answer }
+
+        within(best_answer_selector) { click_on 'Choose as best' }
+
+        answers_bodies = page.all('.answers .answer-body').map(&:text)
+
+        within best_answer_selector do
+          expect(page).to have_no_link 'Choose as best'
+        end
+
+        expect(page).to have_selector "#{best_answer_selector}.best-answer"
+        expect(page).to have_selector '.best-answer', count: 1
+        expect(answers_bodies).to eq answers_reordered.map(&:body)
       end
-
-      expect(page).to have_selector "#{best_answer_selector}.best-answer"
-      expect(page).to have_selector '.best-answer', count: 1
-      expect(answers_bodies).to eq answers_reordered.map(&:body)
     end
   end
 end
