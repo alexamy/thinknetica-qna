@@ -5,4 +5,8 @@ class Answer < ApplicationRecord
   belongs_to :author, class_name: 'User'
 
   validates :body, presence: true
+
+  def set_as_best
+    question.best_answer = self
+  end
 end

@@ -6,10 +6,4 @@ class Question < ApplicationRecord
   belongs_to :best_answer, class_name: 'Answer', optional: true
 
   validates :title, :body, presence: true
-
-  def best_answer=(answer)
-    return unless answer&.question == self
-
-    super(answer)
-  end
 end
