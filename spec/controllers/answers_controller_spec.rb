@@ -8,7 +8,8 @@ RSpec.describe AnswersController, type: :controller do
   let!(:answer) { create(:answer, question: question, author: user) }
 
   let!(:other_user) { create(:user) }
-  let!(:other_answer) { create(:answer, question: question, author: other_user) }
+  let!(:other_question) { create(:question, author: other_user) }
+  let!(:other_answer) { create(:answer, question: other_question, author: other_user) }
 
   describe 'GET #show' do
     before { get :show, params: { id: answer } }
@@ -124,6 +125,26 @@ RSpec.describe AnswersController, type: :controller do
     it 'returns 200 status' do
       delete :destroy, params: { id: answer }, format: :js
       expect(response).to have_http_status :ok
+    end
+  end
+
+  describe 'POST #set_as_best' do
+    before { login(user) }
+
+    it 'sets the answer as best' do
+      post :set_as_best, params: { id: answer.id }, format: :js
+      expect(answer.question.best_answer).to eq answer
+    end
+
+    it 'allows to set an answer as best only for author of the question' do
+      expect do
+        post :set_as_best, params: { id: other_answer.id }, format: :js
+      end.not_to change(other_answer.question, :best_answer)
+    end
+
+    it 'render set_as_best view' do
+      post :set_as_best, params: { id: answer.id }, format: :js
+      expect(response).to render_template :set_as_best
     end
   end
 end
