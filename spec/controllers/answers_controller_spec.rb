@@ -133,12 +133,14 @@ RSpec.describe AnswersController, type: :controller do
 
     it 'sets the answer as best' do
       post :set_as_best, params: { id: answer.id }, format: :js
+      answer.question.reload
       expect(answer.question.best_answer).to eq answer
     end
 
     it 'allows to set an answer as best only for author of the question' do
       expect do
         post :set_as_best, params: { id: other_answer.id }, format: :js
+        other_answer.question.reload
       end.not_to change(other_answer.question, :best_answer)
     end
 

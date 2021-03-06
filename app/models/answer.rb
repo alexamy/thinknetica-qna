@@ -8,5 +8,6 @@ class Answer < ApplicationRecord
 
   def set_as_best
     question.best_answer = self
+    question.save
   end
 end
