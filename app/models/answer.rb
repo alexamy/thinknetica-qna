@@ -10,4 +10,8 @@ class Answer < ApplicationRecord
     question.best_answer = self
     question.save
   end
+
+  def best?
+    question.best_answer == self
+  end
 end
