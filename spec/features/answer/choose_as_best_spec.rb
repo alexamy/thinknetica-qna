@@ -44,7 +44,7 @@ feature 'User can choose the best answer', "
       expect(page).to have_selector '.best-answer', count: 1
 
       question.reload
-      expect(page.all('.answers .answer-body').map(&:text)).to eq question.answers.map(&:body)
+      expect(page.all('.answers .answer-body').map(&:text)).to eq question.answers_ordered.map(&:body)
     end
   end
 end

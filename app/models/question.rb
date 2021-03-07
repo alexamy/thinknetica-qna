@@ -7,8 +7,7 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
-  def answers
-    answers = super
+  def answers_ordered
     return answers unless best_answer
 
     [best_answer] + answers.reject(&:best?)
