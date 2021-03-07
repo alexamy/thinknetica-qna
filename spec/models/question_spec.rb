@@ -13,4 +13,21 @@ RSpec.describe Question, type: :model do
     it { is_expected.to validate_presence_of :title }
     it { is_expected.to validate_presence_of :body }
   end
+
+  describe 'answers' do
+    subject(:question) { create(:question) }
+
+    let(:answers) { create_list(:answer, 2, question: question) }
+
+    it 'save order when there is no best answer' do
+      expect(question.answers).to eq answers
+    end
+
+    it 'put the best answer as first' do
+      answers[1].set_as_best
+      question.reload
+
+      expect(question.answers).to eq answers.reverse
+    end
+  end
 end

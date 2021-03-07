@@ -15,18 +15,7 @@ function addDeleteLinks() {
   });
 }
 
-function addChooseAsBestLinks() {
-  $('.answers').on('click', '.choose-best-answer-link', function(e) {
-    $('.best-answer .choose-best-answer-link').show();
-    $('.best-answer').removeClass('best-answer');
-
-    $(this).hide();
-    $(this).parents('.answer').addClass('best-answer');
-  });
-}
-
 $(document).on('turbolinks:load', function() {
   addEditLinks();
   addDeleteLinks();
-  addChooseAsBestLinks();
 });

@@ -31,22 +31,20 @@ feature 'User can choose the best answer', "
     scenario 'choose answer as the best for his question', js: true do
       visit question_path(question)
 
-      answers.each do |best_answer|
-        best_answer_selector = "#answer-#{best_answer.id}"
-        answers_reordered = [best_answer] + answers.reject { |a| a == best_answer }
+      best_answer = answers.drop(1).sample
+      best_answer_selector = "#answer-#{best_answer.id}"
 
-        within(best_answer_selector) { click_on 'Choose as best' }
+      within(best_answer_selector) { click_on 'Choose as best' }
 
-        answers_bodies = page.all('.answers .answer-body').map(&:text)
-
-        within best_answer_selector do
-          expect(page).to have_no_link 'Choose as best'
-        end
-
-        expect(page).to have_selector "#{best_answer_selector}.best-answer"
-        expect(page).to have_selector '.best-answer', count: 1
-        expect(answers_bodies).to eq answers_reordered.map(&:body)
+      within best_answer_selector do
+        expect(page).to have_no_link 'Choose as best'
       end
+
+      expect(page).to have_selector "#{best_answer_selector}.best-answer"
+      expect(page).to have_selector '.best-answer', count: 1
+
+      question.reload
+      expect(page.all('.answers .answer-body').map(&:text)).to eq question.answers.map(&:body)
     end
   end
 end
