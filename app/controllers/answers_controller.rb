@@ -21,8 +21,14 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy if current_user.author_of?(@answer)
-    head :ok
+    return unless current_user.author_of?(@answer)
+
+    if @answer.best?
+      @answer.question.best_answer = nil
+      @answer.question.save
+    end
+
+    @answer.destroy
   end
 
   def set_as_best

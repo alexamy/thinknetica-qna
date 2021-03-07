@@ -118,13 +118,13 @@ RSpec.describe AnswersController, type: :controller do
       expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(-1)
     end
 
-    it "can't delete other's answer" do
-      expect { delete :destroy, params: { id: other_answer }, format: :js }.not_to change(Answer, :count)
+    it 'deletes the best answer' do
+      answer.set_as_best
+      expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(-1)
     end
 
-    it 'returns 200 status' do
-      delete :destroy, params: { id: answer }, format: :js
-      expect(response).to have_http_status :ok
+    it "can't delete other's answer" do
+      expect { delete :destroy, params: { id: other_answer }, format: :js }.not_to change(Answer, :count)
     end
   end
 
