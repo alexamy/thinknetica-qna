@@ -41,5 +41,8 @@ RSpec/ExampleLength:
 RSpec/MultipleExpectations:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Max: 8
+
 RSpec/ScatteredSetup:
   Enabled: false

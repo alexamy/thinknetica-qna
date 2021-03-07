@@ -21,15 +21,16 @@ feature 'User can delete answer', "
       visit question_path(question)
     end
 
-    scenario 'deletes his answer' do
-      within('tr', text: answer.body) { click_on 'Delete' }
+    scenario 'deletes his answer', js: true do
+      within "#answer-#{answer.id}" do
+        click_on 'Delete'
+      end
 
-      expect(page).to have_content 'Answer was successfully deleted.'
       expect(page).to have_no_content answer.body
     end
 
     scenario 'tries to delete others answer' do
-      within('tr', text: other_answer.body) do
+      within "#answer-#{other_answer.id}" do
         expect(page).to have_no_button 'Delete'
       end
     end
@@ -38,7 +39,7 @@ feature 'User can delete answer', "
   scenario 'Unauthenticated tries to delete answer' do
     visit question_path(question)
 
-    within('tr', text: other_answer.body) do
+    within "#answer-#{other_answer.id}" do
       expect(page).to have_no_button 'Delete'
     end
   end

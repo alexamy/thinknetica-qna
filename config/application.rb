@@ -26,7 +26,5 @@ module Qna
                               routing_specs: false,
                               request_specs: false
     end
-
-    config.action_view.form_with_generates_remote_forms = false
   end
 end

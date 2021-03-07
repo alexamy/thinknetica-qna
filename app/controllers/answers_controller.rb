@@ -2,8 +2,9 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
+  before_action :find_user, only: %i[create update set_as_best]
   before_action :find_question, only: %i[new create]
-  before_action :find_answer, only: %i[show destroy]
+  before_action :find_answer, only: %i[show destroy update set_as_best]
 
   def show; end
 
@@ -12,25 +13,30 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.create(answer_params)
+  end
 
-    if @answer.save
-      redirect_to @question
-    else
-      render 'questions/show'
-    end
+  def update
+    @answer.update(answer_params) if current_user.author_of?(@answer)
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      redirect_to question_path(@answer.question), notice: 'Answer was successfully deleted.'
-    else
-      redirect_back fallback_location: root_path, notice: "Can't delete someone else's answer"
-    end
+    return unless current_user.author_of?(@answer)
+
+    @answer.destroy
+  end
+
+  def set_as_best
+    return unless @user.author_of?(@answer.question)
+
+    @answer.set_as_best
   end
 
   private
+
+  def find_user
+    @user = User.find_by(id: current_user&.id)
+  end
 
   def find_question
     @question = Question.find(params[:question_id])
