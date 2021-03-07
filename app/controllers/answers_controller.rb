@@ -32,7 +32,7 @@ class AnswersController < ApplicationController
   end
 
   def set_as_best
-    return unless @answer.question.author == @user
+    return unless @user.author_of?(@answer.question)
 
     @answer.set_as_best
   end
