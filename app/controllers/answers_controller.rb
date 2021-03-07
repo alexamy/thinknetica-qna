@@ -23,11 +23,6 @@ class AnswersController < ApplicationController
   def destroy
     return unless current_user.author_of?(@answer)
 
-    if @answer.best?
-      @answer.question.best_answer = nil
-      @answer.question.save
-    end
-
     @answer.destroy
   end
 
