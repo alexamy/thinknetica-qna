@@ -29,6 +29,16 @@ feature 'User can add an answer', "
 
       expect(page).to have_content "Body can't be blank"
     end
+
+    scenario 'adds an answer with attached files' do
+      fill_in 'Answer', with: 'Test answer body'
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_on 'Add answer'
+
+      expect(page).to have_content 'Test answer body'
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
   end
 
   scenario 'Unauthenticated user tries to add an answer' do
