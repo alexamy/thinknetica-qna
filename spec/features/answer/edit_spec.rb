@@ -29,7 +29,7 @@ feature 'User can edit answer', "
     scenario 'edits his answer', js: true do
       visit question_path(question)
 
-      within '.answers' do
+      within "#answer-#{answer.id}" do
         click_on 'Edit'
         fill_in 'Your answer', with: 'edited answer'
         click_on 'Save'
@@ -43,7 +43,7 @@ feature 'User can edit answer', "
     scenario 'edits his answer with errors', js: true do
       visit question_path(question)
 
-      within '.answers' do
+      within "#answer-#{answer.id}" do
         click_on 'Edit'
         fill_in 'Your answer', with: ''
         click_on 'Save'
