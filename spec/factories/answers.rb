@@ -13,5 +13,9 @@ FactoryBot.define do
     trait :invalid do
       body { nil }
     end
+
+    trait :with_files do
+      files { [create_file('spec/rails_helper.rb')] }
+    end
   end
 end
