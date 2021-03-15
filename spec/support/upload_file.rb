@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
-def create_file(path, file_type: 'text/plain', from_app: true)
-  root = "#{Rails.root}/" if from_app
-  Rack::Test::UploadedFile.new("#{root}#{path}", file_type)
+# :reek:UtilityFunction
+def create_file_from_system(path, file_type: 'text/plain')
+  Rack::Test::UploadedFile.new(path, file_type)
+end
+
+# :reek:UtilityFunction
+def create_file(path, file_type: 'text/plain')
+  Rack::Test::UploadedFile.new("#{Rails.root}/#{path}", file_type)
 end
