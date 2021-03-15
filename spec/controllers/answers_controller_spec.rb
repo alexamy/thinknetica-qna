@@ -6,6 +6,7 @@ RSpec.describe AnswersController, type: :controller do
   let!(:user) { create(:user) }
   let!(:question) { create(:question, author: user) }
   let!(:answer) { create(:answer, question: question, author: user) }
+  let!(:answer_with_files) { create(:answer, :with_files, question: question, author: user) }
 
   let!(:other_user) { create(:user) }
   let!(:other_question) { create(:question, author: other_user) }
@@ -99,6 +100,13 @@ RSpec.describe AnswersController, type: :controller do
         patch :update, params: { id: answer.id, answer: { body: 'new body' } }, format: :js
         answer.reload
         expect(answer.body).to eq 'new body'
+      end
+
+      it 'joins file collections' do
+        files = [create_file('spec/spec_helper.rb')]
+        expect do
+          patch :update, params: { id: answer_with_files.id, answer: { files: files } }, format: :js
+        end.to change(answer_with_files.files, :count).by 1
       end
     end
 
