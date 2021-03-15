@@ -5,9 +5,8 @@
   h1.question-title = @question.title
   p.question-body = @question.body
 
-  - if @question.files.attached?
-    - @question.files.each do |file|
-      p = link_to file.filename.to_s, url_for(file)
+  .question-files
+    = render 'shared/files', files: @question.files
 
   - if @user&.author_of?(@question)
     p = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
