@@ -6,7 +6,7 @@
   p.question-body = @question.body
 
   .question-files
-    = render 'shared/files', files: @question.files
+    = render 'shared/files', files: @question.files, own: @user&.author_of?(@question)
 
   - if @user&.author_of?(@question)
     p = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
