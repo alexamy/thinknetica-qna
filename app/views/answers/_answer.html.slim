@@ -2,7 +2,7 @@
   .answer id="answer-#{answer.id}" class="#{'best-answer' if answer.best?}"
     p.answer-body = answer.body
 
-    = render 'shared/files', files: answer.files, own: @user&.author_of?(answer)
+    = render 'shared/files', files: answer.files, owned: @user&.author_of?(answer)
 
     - if @user&.author_of?(answer.question)
       p = link_to 'Choose as best',
