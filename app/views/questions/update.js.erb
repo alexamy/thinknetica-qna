@@ -2,7 +2,7 @@ $('.question-errors').html('<%= render 'shared/errors', resource: @question %>')
 
 <% unless @question.errors.present? %>
   $('.question-body').html('<%= j @question.body %>');
-  $('.question-files').html("<%= j render 'shared/files', files: @question.files %>");
+  $('.question-files').html("<%= j render 'shared/files', files: @question.files, owned: true %>");
   $('<%= "#edit-question-#{@question.id}" %>').hide();
   $('.edit-question-link').show();
 <% end %>
