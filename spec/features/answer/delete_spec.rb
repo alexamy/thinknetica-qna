@@ -38,7 +38,7 @@ feature 'User can delete answer', "
       end
     end
 
-    scenario 'deletes file of his answer' do
+    scenario 'deletes file of his answer', js: true do
       within "#answer-#{answer_with_files.id}" do
         within('.file') { click_on 'Delete' }
         expect(page).to have_no_link answer_with_files.files.first.filename.to_s
