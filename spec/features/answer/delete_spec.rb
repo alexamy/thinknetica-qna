@@ -15,6 +15,9 @@ feature 'User can delete answer', "
   given!(:answer) { create(:answer, question: question, author: user) }
   given!(:other_answer) { create(:answer, question: question, author: other_user) }
 
+  given!(:answer_with_files) { create(:answer, :with_files, question: question, author: user) }
+  given!(:other_answer_with_files) { create(:answer, :with_files, question: question, author: other_user) }
+
   describe 'Authenticated user' do
     background do
       sign_in(user)
@@ -32,6 +35,21 @@ feature 'User can delete answer', "
     scenario 'tries to delete others answer' do
       within "#answer-#{other_answer.id}" do
         expect(page).to have_no_button 'Delete'
+      end
+    end
+
+    scenario 'deletes file of his answer', js: true do
+      within "#answer-#{answer_with_files.id}" do
+        within('.file') { click_on 'Delete' }
+        expect(page).to have_no_link answer_with_files.files.first.filename.to_s
+      end
+    end
+
+    scenario 'tries to delete file of others answer' do
+      within "#answer-#{other_answer_with_files.id}" do
+        within('.file') do
+          expect(page).to have_no_link 'Delete'
+        end
       end
     end
   end

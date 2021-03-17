@@ -9,6 +9,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   let(:question) { create(:question, author: user) }
   let(:other_question) { create(:question, author: other_user) }
+  let(:question_with_files) { create(:question, :with_files, author: user) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3, author: user) }
@@ -128,6 +129,13 @@ RSpec.describe QuestionsController, type: :controller do
 
         expect(question.title).to eq 'new title'
         expect(question.body).to eq 'new body'
+      end
+
+      it 'joins file collections' do
+        files = [create_file('spec/spec_helper.rb')]
+        expect do
+          patch :update, params: { id: question_with_files, question: { files: files } }, format: :js
+        end.to change(question_with_files.files, :count).by 1
       end
     end
 

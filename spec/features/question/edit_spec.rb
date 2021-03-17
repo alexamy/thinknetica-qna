@@ -11,6 +11,7 @@ feature 'User can edit question', "
   given!(:other_user) { create(:user) }
 
   given!(:question) { create(:question, author: user) }
+  given!(:question_with_files) { create(:question, :with_files, author: user) }
   given!(:other_question) { create(:question, author: other_user) }
 
   scenario 'Unauthenticated user can not edit the question', js: true do
@@ -48,6 +49,23 @@ feature 'User can edit question', "
       end
 
       expect(page).to have_content "Body can't be blank"
+    end
+
+    scenario 'edits his question with files', js: true do
+      visit question_path(question_with_files)
+
+      within('.question') { click_on 'Edit' }
+      within "#edit-question-#{question_with_files.id}" do
+        attach_file 'Files', ["#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+      end
+
+      within '.question' do
+        expect(page).to have_link 'spec_helper.rb'
+        question_with_files.files.each do |file|
+          expect(page).to have_link file.filename.to_s
+        end
+      end
     end
 
     scenario "tries to edit other user's question", js: true do

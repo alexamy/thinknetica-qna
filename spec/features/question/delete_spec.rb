@@ -13,6 +13,9 @@ feature 'User can delete question', "
   given(:question) { create(:question, author: user) }
   given(:other_question) { create(:question, author: other_user) }
 
+  given(:question_with_files) { create(:question, :with_files, author: user) }
+  given(:other_question_with_files) { create(:question, :with_files, author: other_user) }
+
   describe 'Authenticated user' do
     background { sign_in(user) }
 
@@ -29,6 +32,25 @@ feature 'User can delete question', "
       visit question_path(other_question)
 
       expect(page).to have_no_button 'Delete'
+    end
+
+    scenario 'deletes file of his question', js: true do
+      visit question_path(question_with_files)
+
+      within '.question-files' do
+        within('.file') { click_on 'Delete' }
+        expect(page).to have_no_link question_with_files.files.first.filename.to_s
+      end
+    end
+
+    scenario 'tries to delete file of others question' do
+      visit question_path(other_question_with_files)
+
+      within '.question-files' do
+        within('.file') do
+          expect(page).to have_no_link 'Delete'
+        end
+      end
     end
   end
 

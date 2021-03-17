@@ -1,0 +1,7 @@
+- if files.attached?
+  - files.each do |file|
+    .file id="file-#{file.id}"
+      span = link_to file.filename.to_s, url_for(file)
+      | &nbsp;
+      - if owned
+        span = link_to 'Delete', file_path(file, format: :js), method: :delete, remote: true, class: 'delete-file'

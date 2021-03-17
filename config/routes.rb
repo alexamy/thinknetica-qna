@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   root to: 'questions#index'
 
+  resources :files, only: %i[destroy]
+
   resources :questions do
     resources :answers, shallow: true do
       post 'set_as_best', on: :member

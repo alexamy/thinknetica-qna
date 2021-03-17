@@ -30,4 +30,8 @@ RSpec.describe Question, type: :model do
       expect(question.answers_ordered).to eq answers.reverse
     end
   end
+
+  it 'have many attached files' do
+    expect(described_class.new.files).to be_an_instance_of ActiveStorage::Attached::Many
+  end
 end

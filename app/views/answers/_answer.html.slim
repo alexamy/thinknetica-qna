@@ -2,6 +2,8 @@
   .answer id="answer-#{answer.id}" class="#{'best-answer' if answer.best?}"
     p.answer-body = answer.body
 
+    = render 'shared/files', files: answer.files, owned: @user&.author_of?(answer)
+
     - if @user&.author_of?(answer.question)
       p = link_to 'Choose as best',
                   set_as_best_answer_path(answer),
@@ -15,4 +17,6 @@
       = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
         = f.label :body, 'Your answer'
         = f.text_area :body
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
         = f.submit 'Save'

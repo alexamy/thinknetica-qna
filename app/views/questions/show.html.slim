@@ -1,9 +1,12 @@
 .question-errors
   = render 'shared/errors', resource: @question
 
-.question
+.question id="question-#{@question.id}"
   h1.question-title = @question.title
   p.question-body = @question.body
+
+  .question-files
+    = render 'shared/files', files: @question.files, owned: @user&.author_of?(@question)
 
   - if @user&.author_of?(@question)
     p = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
@@ -12,6 +15,8 @@
     = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" } do |f|
       = f.label :body, 'Question'
       = f.text_area :body
+      = f.label :files
+      = f.file_field :files, multiple: true, direct_upload: true
       = f.submit 'Save'
 
   .answer-errors
@@ -24,5 +29,8 @@
   = form_with model: [@question, @answer], class: 'new-answer' do |f|
     = f.label :body, 'Answer'
     = f.text_area :body
+
+    = f.label :files
+    = f.file_field :files, multiple: true, direct_upload: true
 
     = f.submit 'Add answer'

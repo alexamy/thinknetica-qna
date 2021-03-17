@@ -9,6 +9,10 @@ class Answer < ApplicationRecord
           inverse_of: 'best_answer',
           dependent: :nullify
 
+  has_many_attached :files
+
+  default_scope { with_attached_files }
+
   validates :body, presence: true
 
   def set_as_best

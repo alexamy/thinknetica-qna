@@ -8,6 +8,7 @@ RSpec.describe Answer, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:question) }
     it { is_expected.to belong_to(:author) }
+    it { is_expected.to have_one(:question_where_is_best) }
   end
 
   describe 'validations' do
@@ -30,5 +31,9 @@ RSpec.describe Answer, type: :model do
       answer.set_as_best
       expect(answer).to be_best
     end
+  end
+
+  it 'have many attached files' do
+    expect(described_class.new.files).to be_an_instance_of ActiveStorage::Attached::Many
   end
 end

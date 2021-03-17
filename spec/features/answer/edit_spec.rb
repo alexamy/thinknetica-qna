@@ -22,13 +22,14 @@ feature 'User can edit answer', "
   describe 'Authenticated user' do
     given!(:other_user) { create(:user) }
     given!(:other_answer) { create(:answer, question: question, author: other_user) }
+    given!(:answer_with_files) { create(:answer, :with_files, question: question, author: user) }
 
     background { sign_in(user) }
 
     scenario 'edits his answer', js: true do
       visit question_path(question)
 
-      within '.answers' do
+      within "#answer-#{answer.id}" do
         click_on 'Edit'
         fill_in 'Your answer', with: 'edited answer'
         click_on 'Save'
@@ -42,13 +43,28 @@ feature 'User can edit answer', "
     scenario 'edits his answer with errors', js: true do
       visit question_path(question)
 
-      within '.answers' do
+      within "#answer-#{answer.id}" do
         click_on 'Edit'
         fill_in 'Your answer', with: ''
         click_on 'Save'
       end
 
       expect(page).to have_content "Body can't be blank"
+    end
+
+    scenario 'edits his answer with files', js: true do
+      visit question_path(question)
+
+      within "#answer-#{answer_with_files.id}" do
+        click_on 'Edit'
+        attach_file 'Files', ["#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+
+        expect(page).to have_link 'spec_helper.rb'
+        answer_with_files.files.each do |file|
+          expect(page).to have_link file.filename.to_s
+        end
+      end
     end
 
     scenario "tries to edit other user's answer", js: true do
