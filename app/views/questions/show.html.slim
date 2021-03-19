@@ -26,11 +26,27 @@
   .answers
     = render @question.answers_ordered
 
+  p Links
+  .links
+    ul
+    - @question.links.each do |link|
+      li = link_to link.name, link.url
+
   = form_with model: [@question, @answer], class: 'new-answer' do |f|
     = f.label :body, 'Answer'
     = f.text_area :body
 
     = f.label :files
     = f.file_field :files, multiple: true, direct_upload: true
+
+    p Links
+
+    .link-form
+      = f.fields_for :links do |l|
+        = l.label :name, 'Link name'
+        = l.text_field :name
+
+        = l.label :url
+        = l.text_field :url
 
     = f.submit 'Add answer'
