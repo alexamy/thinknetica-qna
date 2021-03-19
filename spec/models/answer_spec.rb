@@ -9,11 +9,14 @@ RSpec.describe Answer, type: :model do
     it { is_expected.to belong_to(:question) }
     it { is_expected.to belong_to(:author) }
     it { is_expected.to have_one(:question_where_is_best) }
+    it { is_expected.to have_many(:links) }
   end
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :body }
   end
+
+  it { is_expected.to accept_nested_attributes_for :links }
 
   describe 'set_as_best' do
     it 'sets as the best answer' do
