@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @answer.links.new
     @user = User.find_by(id: current_user&.id)
   end
 

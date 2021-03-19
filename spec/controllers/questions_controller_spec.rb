@@ -38,6 +38,10 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
 
+    it 'assigns nested links for answer' do
+      expect(assigns(:answer).links.first).to be_a_new(Link)
+    end
+
     it 'assigns user to @user' do
       expect(assigns(:user)).to be_an_instance_of(User)
     end
